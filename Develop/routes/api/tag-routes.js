@@ -2,6 +2,16 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
+router.post('/associate', async (req, res) => {
+  try {
+    const { product_id, tag_id } = req.body;
+    const productTag = await ProductTag.create({ product_id, tag_id });
+    res.status(201).json(productTag);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 
 // find all tags
 router.get('/', async (req, res) => {
